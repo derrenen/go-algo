@@ -40,11 +40,11 @@ type CircularQueue struct {
 	head   int
 }
 
-func NewCircularQueue(queueLen int) *CircularQueue {
+func NewCircularQueue(queueCap int) *CircularQueue {
 	return &CircularQueue{
 		mu:     &sync.Mutex{},
-		data:   make([]int, queueLen),
-		cap:    queueLen,
+		data:   make([]int, queueCap),
+		cap:    queueCap,
 		curCap: 0,
 		head:   0,
 	}
