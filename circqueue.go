@@ -2,6 +2,7 @@ package circqueue
 
 import "sync"
 
+//Error definition
 //+--------------------------------------------------------------------------------------------------------------------+
 
 type NoFreeCapErr struct {
@@ -28,6 +29,7 @@ func (e *QueueEmptyErr) Error() string {
 	return e.err
 }
 
+//The thread safe implimentation of circular queue (https://en.wikipedia.org/wiki/Circular_buffer) data structure
 //+--------------------------------------------------------------------------------------------------------------------+
 
 type CircularQueue struct {
