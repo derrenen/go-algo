@@ -40,11 +40,11 @@ type CircularQueue struct {
 	head   int
 }
 
-func NewCircularQueue(queueCap int) *CircularQueue {
+func NewCircularQueue(queueLen int) *CircularQueue {
 	return &CircularQueue{
 		mu:     &sync.Mutex{},
-		data:   make([]int, queueCap),
-		cap:    queueCap,
+		data:   make([]int, queueLen),
+		cap:    queueLen,
 		curCap: 0,
 		head:   0,
 	}
@@ -54,7 +54,7 @@ func (cq *CircularQueue) EnQueue(val int) error {
 	cq.mu.Lock()
 	defer cq.mu.Unlock()
 	if cq.curCap != cq.cap {
-		cq.data[cq.head+cq.curCap] = val
+		cq.data[(cq.head+cq.curCap)%cq.cap] = val
 		cq.curCap += 1
 		return nil
 	}
@@ -65,7 +65,7 @@ func (cq *CircularQueue) DeQueue() error {
 	cq.mu.Lock()
 	defer cq.mu.Unlock()
 	if cq.curCap != 0 {
-		cq.head = cq.head + 1
+		cq.head = (cq.head + 1) % cq.cap
 		cq.curCap -= 1
 		return nil
 	}
@@ -85,7 +85,7 @@ func (cq *CircularQueue) Rear() (int, error) {
 	cq.mu.Lock()
 	defer cq.mu.Unlock()
 	if cq.curCap != 0 {
-		return cq.data[cq.head+cq.curCap-1], nil
+		return cq.data[(cq.head+cq.curCap-1)%cq.cap], nil
 	}
 	return 0, NewQueueEmptyErr()
 }
