@@ -31,7 +31,7 @@ func (e *QueueEmptyErr) Error() string {
 	return e.err
 }
 
-//The thread safe implimentation of circular queue (https://en.wikipedia.org/wiki/Circular_buffer) data structure
+//The thread safe implementation of circular queue (https://en.wikipedia.org/wiki/Circular_buffer) data structure
 //+--------------------------------------------------------------------------------------------------------------------+
 
 type circularQueue struct {
